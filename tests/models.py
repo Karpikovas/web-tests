@@ -1,16 +1,19 @@
 from django.db import models
 
+class Tag(models.Model):
+	name = models.CharField(max_length=255)
+
+	def __str__(self):
+		return self.name
+
 class Test(models.Model):
+	tags = models.ForeignKey(Tag)
 	name = models.CharField(max_length=255)
 	create_date = models.DateTimeField()
 	update_date = models.DateTimeField(auto_now=True, null=True)
 
 	def __str__(self):
 		return self.name
-
-class Tag(models.Model):
-	quiz = models.ForeignKey(Test)
-	name = models.CharField(max_length=255)
 
 class Question(models.Model):
 	quiz = models.ForeignKey(Test)

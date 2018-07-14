@@ -6,13 +6,13 @@ class AnswerInline(admin.StackedInline):
 
 class QuestionCase(admin.ModelAdmin):
 	inlines = [AnswerInline]
-
-class TagsInline(admin.StackedInline):
-	model = Tag
-	extra = 0
+	list_display = ('question_text', 'quiz', 'create_date', 'update_date')
+	list_filter = ['quiz']
 
 class TestCase(admin.ModelAdmin):
-	inlines = [TagsInline]
-
+	list_display = ('name', 'tags', 'create_date', 'update_date')
+	list_filter = ['tags']
+	
 admin.site.register(Question, QuestionCase)
 admin.site.register(Test, TestCase)
+admin.site.register(Tag)

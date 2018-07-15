@@ -8,16 +8,31 @@
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
     </head>
     <body>
-        <div class="page-header">
-         <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
-            <h1><a href="/">Тесты онлайн</a></h1>
-
+        <div class="page-header">     
+            {% if request.user.is_authenticated  %}
+                 <p class="top-menu"> <small> <a href="{% url 'logout' %}?next={{ request.path }}" class="top-menu"><span class="glyphicon glyphicon-log-out"><h4>Пользователь {{ user.username }} </h4> </a></small></p>
+            {% else %}
+                <a href="{% url 'login' %}?next={{ request.path }}" class="top-menu"><span class="glyphicon glyphicon-log-in"></span></a>
+                <a href="{% url 'register' %}?next={{ request.path }}" class="top-menu"><span class="glyphicon glyphicon-lock"></span>
+            {% endif %}
+             <h1><a href="/">Тесты онлайн</a></h1>
         </div>
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
-                {% block content %}
-                {% endblock %}
+                {% if user.is_authenticated %}
+                        {% if tests_list %}
+                            <ul>
+                            {% for test in tests_list %}
+                                <li><a href="/tests/{{ test.id }}/">{{ test.name }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No tests are available.</p>
+                        {% endif %}     
+                    {% endif %}
+                    {% block content %}
+                    {% endblock %}
                 </div>
             </div>
         </div>

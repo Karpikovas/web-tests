@@ -1,0 +1,14 @@
+{% extends "tests/test_suite.html" %}
+
+{% block content %}
+	<h2>{{ test.question.question_name }}</h2>
+      <form action="" method="post">
+      {% csrf_token %}
+      {% for answer in test.question.answer_set.all %}
+
+      {% endfor %}
+      <!-- as_p для того, чтобы каждый элемент формы был с новой строки -->
+      {{ form.as_p }}
+      <button type="submit">Зарегистрироваться</button>
+    </form>
+{% endblock %}

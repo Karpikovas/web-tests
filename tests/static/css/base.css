@@ -1,5 +1,5 @@
 h1 a {
-    color: #FFFF00;
+    color:  color: #000000;;
     font-family: 'Lobster';
 }
 body {
@@ -19,11 +19,24 @@ body {
 }
 
 .content {
-    margin-left: 40px;
+ 
+    font-size: 26pt;
 }
 
 h1, h2, h3, h4 {
     font-family: 'Lobster', cursive;
+   
+}
+
+h2 {
+    color: #0000CD;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+li, ul, li a {
+    font-family: 'Lobster';
+    color: #000000;
 }
 
 .date {

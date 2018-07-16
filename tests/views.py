@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse, Http404, get_object_or_404
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from .models import Test, Tag, Question, Answer
@@ -8,14 +8,17 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.http import HttpResponseRedirect
 from django.views.generic.base import View
+from django.views import generic
 from django.contrib.auth import logout
 from django.urls import reverse
+from .forms import Testsystem
+
 
 
 def test_suite(request):
-	tests_list = Test.objects.all().order_by('create_date')[:10]
-	context = {'tests_list': tests_list}
-	return render(request, 'tests/test_suite.html', context)
+	tags_list = Tag.objects.all().order_by('name')
+	context = {'tags_list': tags_list}
+	return render(request, 'tests/tests.html', context)
 
 class RegisterFormView(FormView):
     form_class = UserCreationForm
@@ -40,3 +43,26 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse('test_suite'))
+
+"""class TestDetailView(generic.DetailView)
+	model = Test
+	template_name = 'tests/test_system.html'
+
+	def get_questions(self):
+		return Test.question_set.all()
+"""
+
+def test_system(request, test_id):
+	
+    form = Testsystem(request.POST)
+    test = get_object_or_404(Test, pk=test_id)
+    if request.method == "POST":
+        if form.is_valid():
+            choice = request.POST["choice"]
+
+    return render(request, 'tests/test_system.html', {'form': form})
+
+class QuestionDetailView(generic.DetailView):
+    model = Test
+    template_name = 'tests/questions.html'
+

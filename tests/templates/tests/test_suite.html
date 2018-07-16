@@ -9,7 +9,7 @@
     </head>
     <body>
         <div class="page-header">     
-            {% if request.user.is_authenticated  %}
+            {% if user.is_authenticated  %}
                  <p class="top-menu"> <small> <a href="{% url 'logout' %}?next={{ request.path }}" class="top-menu"><span class="glyphicon glyphicon-log-out"><h4>Пользователь {{ user.username }} </h4> </a></small></p>
             {% else %}
                 <a href="{% url 'login' %}?next={{ request.path }}" class="top-menu"><span class="glyphicon glyphicon-log-in"></span></a>
@@ -19,18 +19,7 @@
         </div>
         <div class="content container">
             <div class="row">
-                <div class="col-md-8">
-                {% if user.is_authenticated %}
-                        {% if tests_list %}
-                            <ul>
-                            {% for test in tests_list %}
-                                <li><a href="/tests/{{ test.id }}/">{{ test.name }}</a></li>
-                            {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No tests are available.</p>
-                        {% endif %}     
-                    {% endif %}
+                <div >
                     {% block content %}
                     {% endblock %}
                 </div>

@@ -1,7 +1,6 @@
-{% extends "tests/test_suite.html" %}
-
+{% extends "base.html" %}
 {% block content %}
-					{% if user.is_authenticated %}
+{% if user.is_authenticated %}
                         <h1 align="left">Выберите тест из следующих наборов:</h1>
                         <hr>
                             <ul>
@@ -9,7 +8,7 @@
                                <li><h2>{{ tag.name }}</h2></li>
                                 <ul>
                                     {% for test in tag.test_set.all %}
-                                    <li><a href="{% url 'questions' test.id %}">{{ test.name }}</a></li>
+                                    <li><a href="{% url 'tests:detail' test.id %}">{{ test.test_name }}</a></li>
                                     {% endfor %}
                                 </ul>
                             {% endfor %}

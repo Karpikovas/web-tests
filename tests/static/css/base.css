@@ -28,6 +28,10 @@ h1, h2, h3, h4 {
    
 }
 
+p {
+    font-family: 'Lobster';
+}
+
 h2 {
     color: #0000CD;
     font-weight:bold;

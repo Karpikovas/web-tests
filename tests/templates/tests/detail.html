@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>{{ test.test_name }}</h1>
+    {% if questions %}
+        <p>Количество вопросов: {{ questions.all.count }}</p>
+        {% if result or result == 0 %}
+            <p>Ваш последний результат: {{ result }}</p>
+        {% else %}
+            <p>Вы не решали этот тест</p>
+        {% endif %}
+        <form action="{% url 'tests:question' test.id test.question_set.first.id%}">
+            <input type="submit" value="Start Quiz" />
+        </form>
+    {% else %}
+        <p>No questions are available.</p>
+            <form action="{% url 'tests:start' %}">
+                <input type="submit" value="Вернуться на главную" />
+            </form>
+    {% endif %}
+{% endblock%}

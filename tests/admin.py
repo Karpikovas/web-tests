@@ -1,29 +1,21 @@
 from django.contrib import admin
-from .models import Question, Test, Answer,Tag
-from django.contrib.auth.models import User, Group
-from django.contrib.auth.admin import UserAdmin    
 
-admin.site.unregister(User)
-
-class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'is_staff','is_active',)
-    list_filter = ('is_staff', 'is_superuser', 'is_active',)    
-admin.site.register(User, CustomUserAdmin)
+# Register your models here.
+from .models import *
 
 
 class AnswerInline(admin.StackedInline):
-	model = Answer
-	extra = 3
+    model = Answer
+    extra = 4
 
-class QuestionCase(admin.ModelAdmin):
-	inlines = [AnswerInline]
-	list_display = ('question_text', 'quiz', 'create_date', 'update_date')
-	list_filter = ['quiz']
 
-class TestCase(admin.ModelAdmin):
-	list_display = ('name', 'tags', 'create_date', 'update_date')
-	list_filter = ['tags']
-	
-admin.site.register(Question, QuestionCase)
-admin.site.register(Test, TestCase)
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [AnswerInline]
+
+
+admin.site.register(Test)
 admin.site.register(Tag)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Answer)
+admin.site.register(TestParticipant)
+admin.site.register(TestParticipantAnswers)

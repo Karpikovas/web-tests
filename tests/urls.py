@@ -1,12 +1,16 @@
-from django.conf.urls import url
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
 from . import views
-
+app_name = 'tests'
 urlpatterns = [
-    path('', views.test_suite, name='test_suite'),
-    path('register/', views.RegisterFormView.as_view(), name='register'),
-    path('login/', views.LoginFormView.as_view(), name='login'),
-    path('logout/', views.LogoutView.as_view(), name='logout'),
-    path('<int:pk>/', views.QuestionDetailView.as_view(), name='questions'),
-
+    # ex: /quiz/
+    path('', views.start, name='start'),
+    # ex: /quiz/5/
+    path('<int:test_id>/<int:question_id>/answer_the_question/', views.answer_the_question, name='answer_the_question'),
+    path('<int:test_id>/<int:question_id>/', views.question, name='question'),
+    path('<int:test_id>/', views.detail, name='detail'),
+    # ex: /quiz/5/results/
+    path('<int:test_id>/results/', views.results, name='results'),
 ]
+
+

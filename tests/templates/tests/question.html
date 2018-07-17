@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+                <form action="{% url 'tests:answer_the_question' test.id question.id %}" method="post">
+                    <label for="usernamesignup" class="uname" >{{ question.question_text }}</label>
+                    {% csrf_token %}
+                    {% for answer in question.answer_set.all %}
+                        <div class="answerRow">
+                            <input type="radio" name="answer" id="answer{{ forloop.counter }}" value="{{ answer.id }}">
+                            <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label>
+                            </input>
+                        </div>
+                    {% endfor %}
+                     <input type="submit" value="Submit answer" />
+                </form>
+                {% if next_question %}
+                    <p class="change_link">
+                        <a href="{% url 'tests:question' test.id next_question.id %}" > Следующий вопрос </a>
+                    </p>
+                {% else %}
+                    <p class="change_link">
+                        <a href="{% url 'tests:results' test.id %}""> Посмотреть результаты теста</a>
+                    </p>
+                {% endif %}
+{% endblock %}
+
+
+

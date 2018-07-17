@@ -13,14 +13,12 @@ from .models import *
 
 
 def start(request):
-    """project's main view"""
     tags_list = Tag.objects.all()
     context = {'tags_list': tags_list}
     return render(request, 'tests/start.html', context)
 
 
 def register(request):
-    """enables registration as a user"""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -36,7 +34,6 @@ def register(request):
 
 
 def question(request, test_id, question_id):
-    """question with all possible answers"""
     test = get_object_or_404(Test, pk=test_id)
     question = get_object_or_404(Question, pk=question_id)
     next_question = test.question_set.filter(id__gt=question.id).order_by('id').first()
@@ -47,7 +44,6 @@ def question(request, test_id, question_id):
 
 @login_required
 def detail(request, test_id):
-    """particular test with latest results and information about questions"""
     test = get_object_or_404(Test, pk=test_id)
     questions = test.question_set.order_by('id')
     try:
@@ -69,7 +65,6 @@ def detail(request, test_id):
 
 @login_required
 def results(request, test_id):
-    """shows user's latest result in particular test"""
     test = get_object_or_404(Test, pk=test_id)
     questions = test.question_set.order_by('id')
     questions_cnt = questions.count()
@@ -86,7 +81,6 @@ def results(request, test_id):
 
 @login_required
 def answer_the_question(request, test_id, question_id):
-    """enables answering the question, updates database"""
     answer = Answer.objects.get(pk=request.POST.get('answer'))
     test = get_object_or_404(Test, pk=test_id)
     participant_id = TestParticipant.objects.get(test=test, user=request.user).id

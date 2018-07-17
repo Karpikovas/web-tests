@@ -3,25 +3,29 @@
 {% block content %}
 
                 <form action="{% url 'tests:answer_the_question' test.id question.id %}" method="post">
-                    <label for="usernamesignup" class="uname" >{{ question.question_text }}</label>
+                    <h1 align='center'>{{ question.question_text }}</h1>
                     {% csrf_token %}
                     {% for answer in question.answer_set.all %}
-                        <div class="answerRow">
-                            <input type="radio" name="answer" id="answer{{ forloop.counter }}" value="{{ answer.id }}">
-                            <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label>
+                        <div class="radio_buttons">
+                            <input type="radio" name="answer"  id="answer{{ forloop.counter }}" value="{{ answer.id }}">
+                            <label class='text'for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label>
                             </input>
                         </div>
                     {% endfor %}
-                     <input type="submit" value="Submit answer" />
+                    <br>
+                    <div align="center" >
+                        <input type="submit" value="Ответить" class ='button1'/>
+                    </div>
+                     
                 </form>
                 {% if next_question %}
-                    <p class="change_link">
-                        <a href="{% url 'tests:question' test.id next_question.id %}" > Следующий вопрос </a>
+                    <p class="change_link"  align='center' >
+                        <a href="{% url 'tests:question' test.id next_question.id %}" align='center' > Следующий вопрос </a>
                     </p>
                 {% else %}
-                    <p class="change_link">
-                        <a href="{% url 'tests:results' test.id %}""> Посмотреть результаты теста</a>
-                    </p>
+                    <p class="change_link"  align='center' >
+                        <a href="{% url 'tests:results' test.id %}"  align='center' > Посмотреть результаты теста</a>
+
                 {% endif %}
 {% endblock %}
 

@@ -9,11 +9,12 @@
         {% else %}
             <p>Вы не решали этот тест</p>
         {% endif %}
-        <form action="{% url 'tests:question' test.id test.question_set.first.id%}">
-            <input type="submit" value="Start Quiz" />
+        <br>
+        <form action="{% url 'tests:question' test.id test.question_set.first.id%}" >
+            <input type="submit" value="Начать тест" class='button1'/>
         </form>
     {% else %}
-        <p>No questions are available.</p>
+        <p>Вопросы недоступны</p>
             <form action="{% url 'tests:start' %}">
                 <input type="submit" value="Вернуться на главную" />
             </form>

@@ -2,14 +2,19 @@
 
 {% block content %}
 <h1>{{test.test_name}} - Результаты</h1>
+<br>
 {% for q,a,r in result %}
     <p class="container">{{ forloop.counter}}. {{ q }}</p>
-    <p>Ваш ответ: {{ a }}</p>
-    <p>Результат: {{ r }}</p>
+    <h3>Ваш ответ: {{ a }}</h3>
+    <div align="center">
+    <h3>Результат: {{ r }}</h3>
+    </div>
         <p></p>
 {% endfor %}
+<br>
     <p align="center">Вы ответили правильно на: {{ points }} из {{questions}}</p>
-                <form action="{% url 'tests:start' %}">
-                    <input type="submit" value="Вернуться на главную" />
+    <br>
+                <form action="{% url 'tests:start' %}" align="center">
+                    <input type="submit" value="Вернуться на главную" class='button1'  />
                 </form>
 {% endblock %}
